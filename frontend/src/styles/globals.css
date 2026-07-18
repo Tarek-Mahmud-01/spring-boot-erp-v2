@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Theme tokens for Guru ERP (ARCHITECTURE.md §3.3).
+ *
+ * Semantic surface/content tokens are space-separated RGB channels so
+ * Tailwind's `rgb(var(--token) / <alpha-value>)` supports opacity. They flip
+ * for dark mode. Brand hues (primary mauve, accent teal) are fixed in
+ * tailwind.config.ts. NEVER hardcode hex in components — use the token classes.
+ *
+ * Dark mode is driven by [data-theme="dark"] on <html> (set by the theme
+ * slice), which overrides the OS `prefers-color-scheme` in both directions.
+ */
+
+@layer base {
+  :root,
+  :root[data-theme="light"] {
+    --bg: 249 250 251;          /* neutral-50 */
+    --surface: 255 255 255;     /* white */
+    --surface-muted: 243 244 246; /* neutral-100 */
+    --fg: 17 24 39;             /* neutral-900 */
+    --fg-muted: 107 114 128;    /* neutral-500 */
+    --border: 229 231 235;      /* neutral-200 */
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: 17 24 39;           /* neutral-900 */
+      --surface: 31 41 55;      /* neutral-800 */
+      --surface-muted: 55 65 81; /* neutral-700 */
+      --fg: 249 250 251;        /* neutral-50 */
+      --fg-muted: 156 163 175;  /* neutral-400 */
+      --border: 55 65 81;       /* neutral-700 */
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: 17 24 39;
+    --surface: 31 41 55;
+    --surface-muted: 55 65 81;
+    --fg: 249 250 251;
+    --fg-muted: 156 163 175;
+    --border: 55 65 81;
+    color-scheme: dark;
+  }
+
+  html {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+  }
+
+  body {
+    margin: 0;
+    font-family: theme("fontFamily.sans");
+    font-size: theme("fontSize.body[0]");
+    line-height: theme("fontSize.body[1].lineHeight");
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary-ring, 113 75 103));
+    outline-offset: 2px;
+  }
+}

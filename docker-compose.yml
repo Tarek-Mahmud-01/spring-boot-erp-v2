@@ -1,0 +1,43 @@
+# Project-local Postgres + Redis for Guru ERP v2.
+# Custom NON-DEFAULT host ports so this project never collides with any other
+# service on the machine (ARCHITECTURE.md §0.2). Nothing is installed globally.
+services:
+  postgres:
+    image: postgres:16
+    container_name: guru-erp-postgres
+    restart: unless-stopped
+    ports:
+      - "55432:5432" # host 55432 -> container 5432
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-guru_erp}
+      POSTGRES_USER: ${POSTGRES_USER:-guru}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-guru}
+      # Deterministic UTC — the app stores every timestamp as timestamptz (UTC).
+      TZ: UTC
+      PGTZ: UTC
+    volumes:
+      - guru-erp-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-guru} -d ${POSTGRES_DB:-guru_erp}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    container_name: guru-erp-redis
+    restart: unless-stopped
+    ports:
+      - "56379:6379" # host 56379 -> container 6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - guru-erp-redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  guru-erp-pgdata:
+  guru-erp-redisdata:
