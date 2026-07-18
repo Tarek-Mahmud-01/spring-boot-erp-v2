@@ -96,14 +96,14 @@ public class SupplierController {
     // --- attachments ---------------------------------------------------------
 
     @GetMapping("/{publicId}/attachments")
-    @PreAuthorize("hasAuthority('procurement.supplier.read')")
+    @PreAuthorize("hasAuthority('procurement.attachment.read')")
     public List<SupplierAttachmentResponse> listAttachments(@PathVariable String publicId) {
         return attachments.list(publicId);
     }
 
     @PostMapping("/{publicId}/attachments")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('procurement.supplier.write')")
+    @PreAuthorize("hasAuthority('procurement.attachment.write')")
     public SupplierAttachmentResponse addAttachment(@PathVariable String publicId,
                                                     @Valid @RequestBody SupplierAttachmentRequest request) {
         return attachments.add(publicId, request);
@@ -111,7 +111,7 @@ public class SupplierController {
 
     @DeleteMapping("/{publicId}/attachments/{attachmentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('procurement.supplier.write')")
+    @PreAuthorize("hasAuthority('procurement.attachment.write')")
     public void deleteAttachment(@PathVariable String publicId, @PathVariable String attachmentId) {
         attachments.delete(publicId, attachmentId);
     }

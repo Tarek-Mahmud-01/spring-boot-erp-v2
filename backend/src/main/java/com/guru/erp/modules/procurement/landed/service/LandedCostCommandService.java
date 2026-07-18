@@ -24,7 +24,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Clock;
 import java.time.Instant;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,19 +62,21 @@ public class LandedCostCommandService {
     private final LandedMapper mapper;
     private final AuditService auditService;
     private final LandedCostPostingService posting;
+    private final LandedCostNumbering numbering;
     private final Clock clock = Clock.systemUTC();
 
     public LandedCostCommandService(LandedCostRepository repository,
                                     LandedCostGrnLinkRepository grnLinks,
                                     LandedCostPoLinkRepository poLinks,
                                     LandedMapper mapper, AuditService auditService,
-                                    LandedCostPostingService posting) {
+                                    LandedCostPostingService posting, LandedCostNumbering numbering) {
         this.repository = repository;
         this.grnLinks = grnLinks;
         this.poLinks = poLinks;
         this.mapper = mapper;
         this.auditService = auditService;
         this.posting = posting;
+        this.numbering = numbering;
     }
 
     /**
@@ -111,7 +112,7 @@ public class LandedCostCommandService {
         List<Map.Entry<String, BigDecimal>> targets = new ArrayList<>(
             new LinkedHashMap<>(overrides).entrySet());
 
-        String invoiceNumber = nextInvoiceNumber();
+        String invoiceNumber = numbering.nextInvoiceNumber();
         List<LandedCost> created = new ArrayList<>();
 
         for (LandedCostChargeLineRequest chargeLine : req.lines()) {
@@ -267,25 +268,6 @@ public class LandedCostCommandService {
             throw new DomainException(ErrorCode.VALIDATION_FAILED,
                 "VOLUME allocation basis is not supported");
         }
-    }
-
-    private String nextInvoiceNumber() {
-        String prefix = "LC-" + Instant.now(clock).atZone(ZoneOffset.UTC).getYear() + "-";
-        String last = repository.maxInvoiceNumberForPrefix(prefix);
-        int n = 1;
-        if (last != null) {
-            try {
-                n = Integer.parseInt(last.substring(prefix.length())) + 1;
-            } catch (NumberFormatException ignored) {
-                n = 1;
-            }
-        }
-        String candidate = prefix + String.format("%04d", n);
-        while (repository.existsByInvoiceNumber(candidate)) {
-            n++;
-            candidate = prefix + String.format("%04d", n);
-        }
-        return candidate;
     }
 
     private static String normaliseCurrency(String currency) {

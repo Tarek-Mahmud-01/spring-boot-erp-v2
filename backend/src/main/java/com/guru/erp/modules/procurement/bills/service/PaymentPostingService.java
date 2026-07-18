@@ -37,18 +37,19 @@ public class PaymentPostingService {
     }
 
     private Map<String, Object> payload(SupplierPayment pay) {
-        return Map.of(
-            "paymentId", pay.getPublicId(),
-            "number", pay.getNumber(),
-            "supplierId", pay.getSupplierId(),
-            "poId", pay.getPoId() == null ? "" : pay.getPoId(),
-            "currency", pay.getAmountCurrency(),
-            "exchangeRate", pay.getExchangeRate().toPlainString(),
-            "amountAmount", pay.getAmountAmount(),
-            "baseAmount", pay.getBaseAmount(),
-            "discountType", pay.getDiscountType() == null ? "" : pay.getDiscountType(),
-            "discountValue", pay.getDiscountValue(),
-            "tenders", tenders(pay));
+        Map<String, Object> p = new java.util.LinkedHashMap<>();
+        p.put("paymentId", pay.getPublicId());
+        p.put("number", pay.getNumber());
+        p.put("supplierId", pay.getSupplierId());
+        p.put("poId", pay.getPoId() == null ? "" : pay.getPoId());
+        p.put("currency", pay.getAmountCurrency());
+        p.put("exchangeRate", pay.getExchangeRate().toPlainString());
+        p.put("amountAmount", pay.getAmountAmount());
+        p.put("baseAmount", pay.getBaseAmount());
+        p.put("discountType", pay.getDiscountType() == null ? "" : pay.getDiscountType());
+        p.put("discountValue", pay.getDiscountValue());
+        p.put("tenders", tenders(pay));
+        return p;
     }
 
     private List<Map<String, Object>> tenders(SupplierPayment pay) {

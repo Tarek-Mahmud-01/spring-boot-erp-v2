@@ -236,11 +236,11 @@ create table label_sizes (
 
 -- Seed the common thermal-label stock sizes offered in the Print Label dialog.
 insert into label_sizes (public_id, name, width_mm, height_mm, is_default, sort_order, is_active) values
-  ('01J0AA0000000000LABELSZ01', '38 x 25 mm', 38, 25, true,  10, true),
-  ('01J0AA0000000000LABELSZ02', '50 x 25 mm', 50, 25, false, 20, true),
-  ('01J0AA0000000000LABELSZ03', '50 x 30 mm', 50, 30, false, 30, true),
-  ('01J0AA0000000000LABELSZ04', '100 x 50 mm', 100, 50, false, 40, true),
-  ('01J0AA0000000000LABELSZ05', '100 x 150 mm', 100, 150, false, 50, true);
+  ('01J0AA000000000LABELSZ01', '38 x 25 mm', 38, 25, true,  10, true),
+  ('01J0AA000000000LABELSZ02', '50 x 25 mm', 50, 25, false, 20, true),
+  ('01J0AA000000000LABELSZ03', '50 x 30 mm', 50, 30, false, 30, true),
+  ('01J0AA000000000LABELSZ04', '100 x 50 mm', 100, 50, false, 40, true),
+  ('01J0AA000000000LABELSZ05', '100 x 150 mm', 100, 150, false, 50, true);
 
 -- =====================================================================
 -- Permissions for the procurement "landed" slice (procurement.<concept>.read/.write),

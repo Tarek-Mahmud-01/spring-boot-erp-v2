@@ -117,66 +117,7 @@ public class SupplierCommandService {
         checkVersion(s, req.version());
         SupplierResponse before = mapper.toResponse(s);
 
-        if (req.name() != null) {
-            String stripped = req.name().strip();
-            if (stripped.isEmpty()) {
-                throw new DomainException(ErrorCode.VALIDATION_FAILED, "Name cannot be blank.");
-            }
-            s.setName(stripped);
-        }
-        if (req.type() != null) {
-            s.setType(req.type());
-        }
-        if (req.locationId() != null) {
-            s.setLocationId(req.locationId());
-        }
-        if (req.contact() != null) {
-            s.setContact(req.contact());
-        }
-        if (req.address() != null) {
-            s.setAddress(req.address());
-        }
-        if (req.paymentTerms() != null) {
-            s.setPaymentTerms(req.paymentTerms());
-        }
-        if (req.defaultCurrency() != null) {
-            s.setDefaultCurrency(req.defaultCurrency().toUpperCase());
-        }
-        if (req.taxRegistrationNo() != null) {
-            s.setTaxRegistrationNo(req.taxRegistrationNo());
-        }
-        if (req.abn() != null) {
-            s.setAbn(blankToNull(req.abn()));
-        }
-        if (req.bankDetails() != null) {
-            s.setBankDetails(req.bankDetails());
-        }
-        if (req.creditLimitAmount() != null || req.creditLimitCurrency() != null) {
-            long amt = req.creditLimitAmount() != null
-                ? req.creditLimitAmount() : s.getCreditLimit().amountMinor();
-            String ccy = req.creditLimitCurrency() != null
-                ? req.creditLimitCurrency().toUpperCase() : s.getCreditLimit().currency();
-            s.setCreditLimit(Money.ofMinor(amt, ccy));
-        }
-        if (req.openingBalanceAmount() != null || req.openingBalanceCurrency() != null) {
-            long amt = req.openingBalanceAmount() != null
-                ? req.openingBalanceAmount() : s.getOpeningBalance().amountMinor();
-            String ccy = req.openingBalanceCurrency() != null
-                ? req.openingBalanceCurrency().toUpperCase() : s.getOpeningBalance().currency();
-            s.setOpeningBalance(Money.ofMinor(amt, ccy));
-        }
-        if (req.openingBalanceSide() != null) {
-            s.setOpeningBalanceSide(req.openingBalanceSide());
-        }
-        if (req.openingBalanceDate() != null) {
-            s.setOpeningBalanceDate(req.openingBalanceDate());
-        }
-        if (req.openingBalanceExchangeRate() != null) {
-            s.setOpeningBalanceExchangeRate(req.openingBalanceExchangeRate());
-        }
-        if (req.openingBalanceAccountId() != null) {
-            s.setOpeningBalanceAccountId(req.openingBalanceAccountId());
-        }
+        SupplierPatcher.apply(s, req);
         assertOpeningBalanceRate(s);
 
         Supplier saved = repository.save(s);
