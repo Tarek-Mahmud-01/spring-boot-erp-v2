@@ -10,7 +10,9 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Version;
 import java.time.Instant;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.type.SqlTypes;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -38,7 +40,8 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "public_id", nullable = false, updatable = false, length = 26, unique = true)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "public_id", nullable = false, updatable = false, length = 26, columnDefinition = "char(26)", unique = true)
     private String publicId;
 
     @CreatedDate
@@ -46,7 +49,8 @@ public abstract class BaseEntity {
     private Instant createdAt;
 
     @CreatedBy
-    @Column(name = "created_by", updatable = false, length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "created_by", updatable = false, length = 26, columnDefinition = "char(26)")
     private String createdBy;
 
     @LastModifiedDate
@@ -54,7 +58,8 @@ public abstract class BaseEntity {
     private Instant updatedAt;
 
     @LastModifiedBy
-    @Column(name = "updated_by", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "updated_by", length = 26, columnDefinition = "char(26)")
     private String updatedBy;
 
     @Column(name = "deleted_at")

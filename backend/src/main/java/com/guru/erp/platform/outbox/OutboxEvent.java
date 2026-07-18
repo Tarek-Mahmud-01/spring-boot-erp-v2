@@ -24,14 +24,16 @@ public class OutboxEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "public_id", nullable = false, updatable = false, length = 26, unique = true)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "public_id", nullable = false, updatable = false, length = 26, columnDefinition = "char(26)", unique = true)
     private String publicId;
 
     /** Domain aggregate that emitted this, e.g. {@code "sales.Invoice"}. */
     @Column(name = "aggregate_type", nullable = false, length = 100)
     private String aggregateType;
 
-    @Column(name = "aggregate_public_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "aggregate_public_id", length = 26, columnDefinition = "char(26)")
     private String aggregatePublicId;
 
     /** Event name, e.g. {@code "InvoicePosted"}. */

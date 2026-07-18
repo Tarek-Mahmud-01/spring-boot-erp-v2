@@ -4,10 +4,19 @@ export const ROUTES = {
   ROOT: "/",
   DASHBOARD: "/dashboard",
 
-  // settings + access (pilot module)
+  // access
   USERS: "/access/users",
   ROLES: "/access/roles",
+
+  // settings
   COMPANY: "/settings/company",
+  CURRENCIES: "/settings/currencies",
+  TAX_CODES: "/settings/tax-codes",
+  LOCATIONS: "/settings/locations",
+  NUMBERING: "/settings/numbering",
+
+  // product
+  PRODUCTS: "/catalog/products",
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];

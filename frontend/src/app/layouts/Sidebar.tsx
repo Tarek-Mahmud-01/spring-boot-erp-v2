@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, ShieldCheck, Building2 } from "lucide-react";
+import { LayoutDashboard, Users, ShieldCheck, Building2, Coins, Percent, MapPin, Hash, Package } from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 import { usePermission } from "@/shared/hooks/usePermission";
 import { PERMISSIONS } from "@/shared/constants/permissionCodes";
@@ -20,9 +20,14 @@ interface NavItem {
 
 const ITEMS: NavItem[] = [
   { to: ROUTES.DASHBOARD, label: "Dashboard", icon: LayoutDashboard, group: "Overview" },
+  { to: ROUTES.PRODUCTS, label: "Products", icon: Package, group: "Catalog", permission: PERMISSIONS.PRODUCT_READ },
   { to: ROUTES.USERS, label: "Users", icon: Users, group: "Access", permission: PERMISSIONS.USER_READ },
   { to: ROUTES.ROLES, label: "Roles", icon: ShieldCheck, group: "Access", permission: PERMISSIONS.ROLE_READ },
   { to: ROUTES.COMPANY, label: "Company", icon: Building2, group: "Settings", permission: PERMISSIONS.COMPANY_READ },
+  { to: ROUTES.CURRENCIES, label: "Currencies", icon: Coins, group: "Settings", permission: PERMISSIONS.CURRENCY_READ },
+  { to: ROUTES.TAX_CODES, label: "Tax codes", icon: Percent, group: "Settings", permission: PERMISSIONS.TAXCODE_READ },
+  { to: ROUTES.LOCATIONS, label: "Locations", icon: MapPin, group: "Settings", permission: PERMISSIONS.LOCATION_READ },
+  { to: ROUTES.NUMBERING, label: "Numbering", icon: Hash, group: "Settings", permission: PERMISSIONS.NUMBERING_READ },
 ];
 
 export function Sidebar() {

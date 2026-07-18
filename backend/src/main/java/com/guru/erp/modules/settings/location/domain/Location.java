@@ -66,10 +66,12 @@ public class Location extends BaseEntity {
     @Column(name = "public_email", length = 200)
     private String publicEmail;
 
-    @Column(name = "default_price_list_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "default_price_list_id", length = 26, columnDefinition = "char(26)")
     private String defaultPriceListId;
 
-    @Column(name = "default_tax_code_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "default_tax_code_id", length = 26, columnDefinition = "char(26)")
     private String defaultTaxCodeId;
 
     @Column(name = "status", nullable = false, length = 16)

@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
 import { store } from "@/app/store";
 import { fetchCurrentUser } from "@/app/store/authSlice";
+import { pushToast } from "@/app/store/toastSlice";
 import { configureHttp } from "@/shared/services/http";
 import { ThemeProvider } from "./ThemeProvider";
 import i18n from "./i18n";
@@ -16,8 +17,7 @@ function StartupBootstrap({ children }: { children: ReactNode }) {
   useEffect(() => {
     configureHttp({
       notifyError: (err) => {
-        // Minimal surface for now; a Toast provider replaces this later.
-        console.error(`[${err.code}] ${err.detail}`);
+        store.dispatch(pushToast({ tone: "error", message: err.detail || "Something went wrong" }));
       },
       onSessionExpired: () => {
         window.location.assign("/login");

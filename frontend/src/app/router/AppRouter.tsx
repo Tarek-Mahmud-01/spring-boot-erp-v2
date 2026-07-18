@@ -15,6 +15,12 @@ import { ROUTES } from "@/shared/constants/routePaths";
 const LoginPage = lazy(() => import("@/modules/access/pages/LoginPage"));
 const UsersPage = lazy(() => import("@/modules/access/pages/UsersPage"));
 const DashboardPage = lazy(() => import("@/modules/dashboard/pages/DashboardPage"));
+const CurrenciesPage = lazy(() => import("@/modules/settings/currency/pages/CurrenciesPage"));
+const TaxCodesPage = lazy(() => import("@/modules/settings/taxcode/pages/TaxCodesPage"));
+const LocationsPage = lazy(() => import("@/modules/settings/location/pages/LocationsPage"));
+const NumberingPage = lazy(() => import("@/modules/settings/numbering/pages/NumberingPage"));
+const CompanyPage = lazy(() => import("@/modules/settings/company/pages/CompanyPage"));
+const ProductsPage = lazy(() => import("@/modules/product/catalog/pages/ProductsPage"));
 
 const router = createBrowserRouter([
   {
@@ -32,6 +38,12 @@ const router = createBrowserRouter([
       { index: true, element: <Navigate to={ROUTES.DASHBOARD} replace /> },
       { path: ROUTES.DASHBOARD, element: <DashboardPage /> },
       { path: ROUTES.USERS, element: <UsersPage /> },
+      { path: ROUTES.CURRENCIES, element: <CurrenciesPage /> },
+      { path: ROUTES.TAX_CODES, element: <TaxCodesPage /> },
+      { path: ROUTES.LOCATIONS, element: <LocationsPage /> },
+      { path: ROUTES.NUMBERING, element: <NumberingPage /> },
+      { path: ROUTES.COMPANY, element: <CompanyPage /> },
+      { path: ROUTES.PRODUCTS, element: <ProductsPage /> },
     ],
   },
   { path: "*", element: <Navigate to={ROUTES.ROOT} replace /> },

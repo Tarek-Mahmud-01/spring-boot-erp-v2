@@ -8,6 +8,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * ENT-006 NumberingRule (US-005 / FR-022-025). One rule per (company, document
@@ -40,7 +42,8 @@ import java.time.LocalDate;
 public class NumberingRule extends BaseEntity {
 
     /** Owning company's public id (ULID). Immutable after creation. */
-    @Column(name = "company_id", nullable = false, updatable = false, length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "company_id", nullable = false, updatable = false, length = 26, columnDefinition = "char(26)")
     private String companyId;
 
     @Enumerated(EnumType.STRING)

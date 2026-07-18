@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * ENT-007 TaxCode (US-003 / FR-012-016).
@@ -38,7 +40,8 @@ import java.time.LocalDate;
         columnNames = {"company_public_id", "code", "effective_from"}))
 public class TaxCode extends BaseEntity {
 
-    @Column(name = "company_public_id", nullable = false, length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "company_public_id", nullable = false, length = 26, columnDefinition = "char(26)")
     private String companyPublicId;
 
     @Column(name = "code", nullable = false, length = 20)

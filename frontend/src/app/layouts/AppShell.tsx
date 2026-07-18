@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
+import { ToastHost } from "@/shared/components/ToastHost";
 
 /**
  * Persistent application shell (ARCHITECTURE.md §3.2). Mounts ONCE — Header and
@@ -28,6 +29,7 @@ export function AppShell() {
           </Suspense>
         </main>
       </div>
+      <ToastHost />
     </div>
   );
 }

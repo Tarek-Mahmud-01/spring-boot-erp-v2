@@ -15,6 +15,14 @@ export default defineConfig({
   server: {
     port: 53000,
     strictPort: true,
+    // Dev proxy: the app calls relative "/api/*"; forward those to the
+    // backend on its custom port so login/API calls work in `npm run dev`.
+    proxy: {
+      "/api": {
+        target: "http://localhost:58080",
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     port: 53000,

@@ -31,17 +31,20 @@ public class AuditLog {
     @Column(name = "entity_type", nullable = false, length = 100)
     private String entityType;
 
-    @Column(name = "entity_public_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "entity_public_id", length = 26, columnDefinition = "char(26)")
     private String entityPublicId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "action", nullable = false, length = 16)
     private AuditAction action;
 
-    @Column(name = "actor_public_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "actor_public_id", length = 26, columnDefinition = "char(26)")
     private String actorPublicId;
 
-    @Column(name = "request_id", length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "request_id", length = 26, columnDefinition = "char(26)")
     private String requestId;
 
     @JdbcTypeCode(SqlTypes.JSON)
@@ -52,10 +55,12 @@ public class AuditLog {
     @Column(name = "after_data", columnDefinition = "jsonb")
     private String afterData;
 
-    @Column(name = "prev_hash", length = 64)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "prev_hash", length = 64, columnDefinition = "char(64)")
     private String prevHash;
 
-    @Column(name = "row_hash", nullable = false, length = 64)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "row_hash", nullable = false, length = 64, columnDefinition = "char(64)")
     private String rowHash;
 
     @Column(name = "created_at", nullable = false, updatable = false)
