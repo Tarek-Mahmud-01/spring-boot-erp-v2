@@ -62,6 +62,7 @@ public class StockOpening extends BaseEntity {
     @Column(name = "unit_cost_amount", nullable = false)
     private long unitCostAmount = 0;
 
+    @JdbcTypeCode(SqlTypes.CHAR)
     @Column(name = "unit_cost_currency", nullable = false, length = 3, columnDefinition = "char(3)")
     private String unitCostCurrency = "USD";
 

@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * Money as {@code long} minor units + ISO-4217 {@code char(3)} currency
@@ -21,6 +23,7 @@ public final class Money implements Serializable, Comparable<Money> {
     @Column(name = "amount_minor", nullable = false)
     private long amountMinor;
 
+    @JdbcTypeCode(SqlTypes.CHAR)
     @Column(name = "currency", nullable = false, length = 3, columnDefinition = "char(3)")
     private String currency;
 

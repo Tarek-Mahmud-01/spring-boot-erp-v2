@@ -49,6 +49,7 @@ public class PriceHistory extends BaseEntity {
     @Column(name = "new_amount", nullable = false)
     private long newAmount;
 
+    @JdbcTypeCode(SqlTypes.CHAR)
     @Column(name = "currency", nullable = false, length = 3, columnDefinition = "char(3)")
     private String currency;
 

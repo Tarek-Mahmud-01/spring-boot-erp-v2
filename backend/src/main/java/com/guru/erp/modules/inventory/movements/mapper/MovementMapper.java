@@ -33,6 +33,7 @@ public interface MovementMapper {
 
     @Mapping(target = "id", source = "publicId")
     @Mapping(target = "status", expression = "java(entity.getStatus().wire())")
+    @Mapping(target = "thresholdExceeded", expression = "java(entity.isThresholdExceeded())")
     AdjustmentResponse toResponse(StockAdjustment entity);
 
     @Mapping(target = "id", source = "publicId")

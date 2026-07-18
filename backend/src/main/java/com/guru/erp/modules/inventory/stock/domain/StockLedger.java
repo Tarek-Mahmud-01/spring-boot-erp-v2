@@ -88,7 +88,8 @@ public class StockLedger extends BaseEntity {
     @Column(name = "source_doc_type", nullable = false, length = 20)
     private SourceDocType sourceDocType;
 
-    @Column(name = "source_doc_id", nullable = false, length = 26)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "source_doc_id", nullable = false, length = 26, columnDefinition = "char(26)")
     private String sourceDocId;
 
     @Column(name = "expiry_date")

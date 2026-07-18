@@ -40,6 +40,7 @@ public class PriceList extends BaseEntity {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @JdbcTypeCode(SqlTypes.CHAR)
     @Column(name = "currency", nullable = false, length = 3, columnDefinition = "char(3)")
     private String currency;
 

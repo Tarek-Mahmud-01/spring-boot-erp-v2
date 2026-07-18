@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 /**
  * ENT-018 Currency — global reference data shared across all companies
@@ -33,7 +35,8 @@ import jakarta.persistence.UniqueConstraint;
 public class Currency extends BaseEntity {
 
     /** ISO 4217 — exactly 3 uppercase letters. Immutable after creation. */
-    @Column(name = "code", nullable = false, updatable = false, length = 3)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(name = "code", nullable = false, updatable = false, length = 3, columnDefinition = "char(3)")
     private String code;
 
     @Column(name = "name", nullable = false, length = 100)
