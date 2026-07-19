@@ -236,11 +236,11 @@ create table label_sizes (
 
 -- Seed the common thermal-label stock sizes offered in the Print Label dialog.
 insert into label_sizes (public_id, name, width_mm, height_mm, is_default, sort_order, is_active) values
-  ('01J0AA000000000LABELSZ01', '38 x 25 mm', 38, 25, true,  10, true),
-  ('01J0AA000000000LABELSZ02', '50 x 25 mm', 50, 25, false, 20, true),
-  ('01J0AA000000000LABELSZ03', '50 x 30 mm', 50, 30, false, 30, true),
-  ('01J0AA000000000LABELSZ04', '100 x 50 mm', 100, 50, false, 40, true),
-  ('01J0AA000000000LABELSZ05', '100 x 150 mm', 100, 150, false, 50, true);
+  ('01J0AA00000000000LABELSZ01', '38 x 25 mm', 38, 25, true,  10, true),
+  ('01J0AA00000000000LABELSZ02', '50 x 25 mm', 50, 25, false, 20, true),
+  ('01J0AA00000000000LABELSZ03', '50 x 30 mm', 50, 30, false, 30, true),
+  ('01J0AA00000000000LABELSZ04', '100 x 50 mm', 100, 50, false, 40, true),
+  ('01J0AA00000000000LABELSZ05', '100 x 150 mm', 100, 150, false, 50, true);
 
 -- =====================================================================
 -- Permissions for the procurement "landed" slice (procurement.<concept>.read/.write),
@@ -249,11 +249,11 @@ insert into label_sizes (public_id, name, width_mm, height_mm, is_default, sort_
 -- (existing run PERM01..PERM75 across prior modules).
 -- =====================================================================
 insert into permissions (public_id, code, name, module, description) values
-  ('01J0AA00000000000PERM104', 'procurement.landed_cost.read',  'View landed costs',    'procurement', 'List and view landed-cost invoices and their allocations'),
-  ('01J0AA00000000000PERM105', 'procurement.landed_cost.write', 'Manage landed costs',  'procurement', 'Record, edit, apply (revalue stock), and delete landed costs'),
-  ('01J0AA00000000000PERM106', 'procurement.unit_barcode.read', 'View unit barcodes',   'procurement', 'List, view, and check unit barcodes and bundles'),
-  ('01J0AA00000000000PERM107', 'procurement.unit_barcode.write','Manage unit barcodes', 'procurement', 'Assign, generate, edit, and delete unit barcodes and bundles'),
-  ('01J0AA00000000000PERM108', 'procurement.label_size.read',   'View label sizes',     'procurement', 'List the print-label stock sizes for the barcode label dialog');
+  ('01J0AA0000000000000PERM104', 'procurement.landed_cost.read',  'View landed costs',    'procurement', 'List and view landed-cost invoices and their allocations'),
+  ('01J0AA0000000000000PERM105', 'procurement.landed_cost.write', 'Manage landed costs',  'procurement', 'Record, edit, apply (revalue stock), and delete landed costs'),
+  ('01J0AA0000000000000PERM106', 'procurement.unit_barcode.read', 'View unit barcodes',   'procurement', 'List, view, and check unit barcodes and bundles'),
+  ('01J0AA0000000000000PERM107', 'procurement.unit_barcode.write','Manage unit barcodes', 'procurement', 'Assign, generate, edit, and delete unit barcodes and bundles'),
+  ('01J0AA0000000000000PERM108', 'procurement.label_size.read',   'View label sizes',     'procurement', 'List the print-label stock sizes for the barcode label dialog');
 
 insert into role_permissions (role_id, permission_id)
 select r.id, p.id

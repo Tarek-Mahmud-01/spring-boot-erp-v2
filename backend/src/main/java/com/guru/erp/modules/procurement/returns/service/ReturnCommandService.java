@@ -64,7 +64,7 @@ public class ReturnCommandService {
     /** FR-109–113 — create a return (born CONFIRMED) against a GRN, relieving stock + posting GL. */
     @Transactional
     public ReturnResponse create(ReturnCreateRequest req) {
-        checkReturnedQtyCap(req.lines(), null);
+        checkLineQtyPositive(req.lines());
         Priced priced = pricing.price(req.lines());
         BigDecimal rate = BigDecimal.ONE;
 
@@ -100,8 +100,7 @@ public class ReturnCommandService {
             throw new DomainException(ErrorCode.VALIDATION_FAILED,
                 "a return must have at least one line");
         }
-        // Editing a return excludes its own current lines from the already-returned cap.
-        checkReturnedQtyCap(req.lines(), r.getId());
+        checkLineQtyPositive(req.lines());
         ReturnResponse before = mapper.toResponse(r);
 
         // 1) Reverse the old effects (stock re-credit + debit-note reversal).
@@ -163,23 +162,16 @@ public class ReturnCommandService {
     // --- internals -----------------------------------------------------------
 
     /**
-     * Cap check: for each GRN line the sum of qty already returned (across live returns, optionally
-     * excluding this one) plus the requested qty must not exceed what was received on that GRN line.
-     * The received qty lives in the goods-receipt slice; without a hard cross-slice join this
-     * enforces the "no double-return of the same GRN line beyond prior returns" invariant. The
-     * received-qty ceiling itself is validated by the confirmation event consumer.
+     * Validate line quantities are strictly positive. The received-qty ceiling itself (reference
+     * {@code ReturnQtyExceedsReceiptError}, raised when {@code qty + already_returned > qty_received})
+     * cannot be enforced here: received qty lives in the goods-receipt slice and this slice holds only
+     * a loose {@code grnLineId} ref. {@link SupplierReturnRepository#sumReturnedQtyForGrnLine} exposes
+     * the per-GRN-line already-returned running total (mirroring the reference aggregation) so the
+     * confirmation event consumer — which does have the receipt slice in scope — can enforce the cap;
+     * this service only validates what it can see.
      */
-    private void checkReturnedQtyCap(List<ReturnLineRequest> lines, Long excludeReturnId) {
+    private void checkLineQtyPositive(List<ReturnLineRequest> lines) {
         for (ReturnLineRequest ln : lines) {
-            if (ln.grnLineId() == null) {
-                continue;
-            }
-            BigDecimal already = repository.sumReturnedQtyForGrnLine(ln.grnLineId(), excludeReturnId);
-            if (already == null) {
-                already = BigDecimal.ZERO;
-            }
-            // Reference ReturnQtyExceedsReceiptError is raised against the GRN line's received qty;
-            // we surface the accumulated total so the consumer can reject an over-return.
             if (ln.qty() != null && ln.qty().signum() <= 0) {
                 throw new DomainException(ErrorCode.VALIDATION_FAILED, "qty must be positive");
             }

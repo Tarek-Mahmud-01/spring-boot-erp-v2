@@ -46,6 +46,16 @@ management:
 
 # Application-specific configuration.
 app:
+  notification:
+    email:
+      host: ${SMTP_HOST:}
+      port: ${SMTP_PORT:587}
+      username: ${SMTP_USERNAME:}
+      password: ${SMTP_PASSWORD:}
+      use-tls: ${SMTP_USE_TLS:true}
+      from-email: ${SMTP_FROM_EMAIL:}
+      from-name: ${SMTP_FROM_NAME:Guru ERP}
+      fake-send: ${EMAIL_FAKE_SEND:true}
   jwt:
     secret: ${JWT_SECRET:dev-only-change-me-32-bytes-minimum-secret-key}
     access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:30}
