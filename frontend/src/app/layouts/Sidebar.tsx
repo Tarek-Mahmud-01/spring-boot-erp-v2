@@ -1,5 +1,20 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, ShieldCheck, Building2, Coins, Percent, MapPin, Hash, Package } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  ShieldCheck,
+  Building2,
+  Coins,
+  Percent,
+  MapPin,
+  Hash,
+  Package,
+  Truck,
+  ClipboardList,
+  FileText,
+  PackageCheck,
+  Receipt,
+} from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 import { usePermission } from "@/shared/hooks/usePermission";
 import { PERMISSIONS } from "@/shared/constants/permissionCodes";
@@ -28,6 +43,29 @@ const ITEMS: NavItem[] = [
   { to: ROUTES.TAX_CODES, label: "Tax codes", icon: Percent, group: "Settings", permission: PERMISSIONS.TAXCODE_READ },
   { to: ROUTES.LOCATIONS, label: "Locations", icon: MapPin, group: "Settings", permission: PERMISSIONS.LOCATION_READ },
   { to: ROUTES.NUMBERING, label: "Numbering", icon: Hash, group: "Settings", permission: PERMISSIONS.NUMBERING_READ },
+  { to: ROUTES.SUPPLIERS, label: "Suppliers", icon: Truck, group: "Procurement", permission: PERMISSIONS.SUPPLIER_READ },
+  {
+    to: ROUTES.PURCHASE_ORDERS,
+    label: "Purchase orders",
+    icon: FileText,
+    group: "Procurement",
+    permission: PERMISSIONS.PROCUREMENT_ORDER_READ,
+  },
+  {
+    to: ROUTES.REQUISITIONS,
+    label: "Requisitions",
+    icon: ClipboardList,
+    group: "Procurement",
+    permission: PERMISSIONS.PROCUREMENT_REQUISITION_READ,
+  },
+  {
+    to: ROUTES.RECEIPTS,
+    label: "Goods receipts",
+    icon: PackageCheck,
+    group: "Procurement",
+    permission: PERMISSIONS.RECEIPT_READ,
+  },
+  { to: ROUTES.BILLS, label: "Supplier bills", icon: Receipt, group: "Procurement", permission: PERMISSIONS.BILL_READ },
 ];
 
 export function Sidebar() {

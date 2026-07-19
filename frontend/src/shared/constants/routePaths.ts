@@ -17,6 +17,18 @@ export const ROUTES = {
 
   // product
   PRODUCTS: "/catalog/products",
+
+  // procurement
+  SUPPLIERS: "/procurement/suppliers",
+  PURCHASE_ORDERS: "/procurement/purchase-orders",
+  REQUISITIONS: "/procurement/requisitions",
+  RECEIPTS: "/procurement/receipts",
+  BILLS: "/procurement/bills",
+
+  // inventory
+  STOCK: "/inventory/stock",
+  ADJUSTMENTS: "/inventory/adjustments",
+  TRANSFERS: "/inventory/transfers",
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];

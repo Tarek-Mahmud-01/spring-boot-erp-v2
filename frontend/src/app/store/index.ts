@@ -7,6 +7,14 @@ import locationReducer from "@/modules/settings/location/slice/locationSlice";
 import numberingReducer from "@/modules/settings/numbering/slice/numberingSlice";
 import companyReducer from "@/modules/settings/company/slice/companySlice";
 import productReducer from "@/modules/product/catalog/slice/productSlice";
+import supplierReducer from "@/modules/procurement/suppliers/slice/supplierSlice";
+import purchaseOrderReducer from "@/modules/procurement/orders/slice/purchaseOrderSlice";
+import requisitionReducer from "@/modules/procurement/requisitions/slice/requisitionSlice";
+import receiptReducer from "@/modules/procurement/receipts/slice/receiptSlice";
+import billReducer from "@/modules/procurement/bills/slice/billSlice";
+import stockReducer from "@/modules/inventory/stock/slice/stockSlice";
+import adjustmentReducer from "@/modules/inventory/adjustments/slice/adjustmentSlice";
+import transferReducer from "@/modules/inventory/transfers/slice/transferSlice";
 import authReducer from "./authSlice";
 import themeReducer from "./themeSlice";
 import toastReducer from "./toastSlice";
@@ -28,6 +36,14 @@ export const store = configureStore({
     numbering: numberingReducer,
     company: companyReducer,
     product: productReducer,
+    supplier: supplierReducer,
+    purchaseOrder: purchaseOrderReducer,
+    requisition: requisitionReducer,
+    receipt: receiptReducer,
+    bill: billReducer,
+    stock: stockReducer,
+    adjustment: adjustmentReducer,
+    transfer: transferReducer,
     [masterDataApi.reducerPath]: masterDataApi.reducer,
   },
   middleware: (getDefault) => getDefault().concat(masterDataApi.middleware),

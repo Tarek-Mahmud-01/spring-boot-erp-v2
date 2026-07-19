@@ -20,6 +20,23 @@ export const PERMISSIONS = {
   NUMBERING_WRITE: "settings.numbering.write",
   PRODUCT_READ: "product.product.read",
   PRODUCT_WRITE: "product.product.write",
+
+  SUPPLIER_READ: "procurement.supplier.read",
+  SUPPLIER_WRITE: "procurement.supplier.write",
+  PROCUREMENT_ORDER_READ: "procurement.order.read",
+  PROCUREMENT_ORDER_WRITE: "procurement.order.write",
+  PROCUREMENT_REQUISITION_READ: "procurement.requisition.read",
+  PROCUREMENT_REQUISITION_WRITE: "procurement.requisition.write",
+  RECEIPT_READ: "procurement.receipt.read",
+  RECEIPT_WRITE: "procurement.receipt.write",
+  BILL_READ: "procurement.bill.read",
+  BILL_WRITE: "procurement.bill.write",
+
+  STOCK_READ: "inventory.stock.read",
+  ADJUSTMENT_READ: "inventory.adjustment.read",
+  ADJUSTMENT_WRITE: "inventory.adjustment.write",
+  TRANSFER_READ: "inventory.transfer.read",
+  TRANSFER_WRITE: "inventory.transfer.write",
 } as const;
 
 export type PermissionCode = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

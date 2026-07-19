@@ -21,6 +21,14 @@ const LocationsPage = lazy(() => import("@/modules/settings/location/pages/Locat
 const NumberingPage = lazy(() => import("@/modules/settings/numbering/pages/NumberingPage"));
 const CompanyPage = lazy(() => import("@/modules/settings/company/pages/CompanyPage"));
 const ProductsPage = lazy(() => import("@/modules/product/catalog/pages/ProductsPage"));
+const SuppliersPage = lazy(() => import("@/modules/procurement/suppliers/pages/SuppliersPage"));
+const PurchaseOrdersPage = lazy(() => import("@/modules/procurement/orders/pages/PurchaseOrdersPage"));
+const RequisitionsPage = lazy(() => import("@/modules/procurement/requisitions/pages/RequisitionsPage"));
+const ReceiptsPage = lazy(() => import("@/modules/procurement/receipts/pages/ReceiptsPage"));
+const BillsPage = lazy(() => import("@/modules/procurement/bills/pages/BillsPage"));
+const StockPage = lazy(() => import("@/modules/inventory/stock/pages/StockPage"));
+const AdjustmentsPage = lazy(() => import("@/modules/inventory/adjustments/pages/AdjustmentsPage"));
+const TransfersPage = lazy(() => import("@/modules/inventory/transfers/pages/TransfersPage"));
 
 const router = createBrowserRouter([
   {
@@ -44,6 +52,11 @@ const router = createBrowserRouter([
       { path: ROUTES.NUMBERING, element: <NumberingPage /> },
       { path: ROUTES.COMPANY, element: <CompanyPage /> },
       { path: ROUTES.PRODUCTS, element: <ProductsPage /> },
+      { path: ROUTES.SUPPLIERS, element: <SuppliersPage /> },
+      { path: ROUTES.PURCHASE_ORDERS, element: <PurchaseOrdersPage /> },
+      { path: ROUTES.REQUISITIONS, element: <RequisitionsPage /> },
+      { path: ROUTES.RECEIPTS, element: <ReceiptsPage /> },
+      { path: ROUTES.BILLS, element: <BillsPage /> },
     ],
   },
   { path: "*", element: <Navigate to={ROUTES.ROOT} replace /> },
