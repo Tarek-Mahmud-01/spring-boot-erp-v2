@@ -1,45 +1,24 @@
 /**
- * In-memory + persisted access/refresh token holder. Kept separate from the
- * axios instance and the Redux store so both can read/write tokens without a
- * circular import. The access token is held in memory (fast, cleared on reload)
- * and mirrored to localStorage so a page refresh can rehydrate the session.
+ * Auth-cookie helpers.
+ *
+ * Access/refresh tokens now live in httpOnly cookies set by the backend, so
+ * page JS (and therefore an XSS payload) can NOT read them — this module no
+ * longer stores tokens. The one value we read is the CSRF token, which the
+ * server exposes in a non-httpOnly cookie for the SPA to echo back in the
+ * `X-CSRF-Token` header on mutating requests (double-submit-cookie pattern).
  */
 
-const ACCESS_KEY = "guru-erp.accessToken";
-const REFRESH_KEY = "guru-erp.refreshToken";
+const CSRF_COOKIE = "ERP_CSRF";
 
-let accessToken: string | null = readInitial(ACCESS_KEY);
-let refreshToken: string | null = readInitial(REFRESH_KEY);
-
-function readInitial(key: string): string | null {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
+/** Read the CSRF token the backend set as a readable cookie, or null. */
+export function getCsrfToken(): string | null {
+  const match = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${CSRF_COOKIE}=`));
+  return match ? decodeURIComponent(match.slice(CSRF_COOKIE.length + 1)) : null;
 }
 
-export function getAccessToken(): string | null {
-  return accessToken;
-}
-
-export function getRefreshToken(): string | null {
-  return refreshToken;
-}
-
-export function setTokens(access: string | null, refresh: string | null): void {
-  accessToken = access;
-  refreshToken = refresh;
-  try {
-    if (access) localStorage.setItem(ACCESS_KEY, access);
-    else localStorage.removeItem(ACCESS_KEY);
-    if (refresh) localStorage.setItem(REFRESH_KEY, refresh);
-    else localStorage.removeItem(REFRESH_KEY);
-  } catch {
-    // ignore storage failures — tokens still live in memory for this session
-  }
-}
-
-export function clearTokens(): void {
-  setTokens(null, null);
+/** True if a CSRF cookie is present (a heuristic that a session likely exists). */
+export function hasSessionCookie(): boolean {
+  return getCsrfToken() !== null;
 }

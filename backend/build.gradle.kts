@@ -40,6 +40,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-mail")
+    // Redis — refresh-token store (rotation/revocation) + login rate-limit counters.
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // --- Database driver ---
     runtimeOnly("org.postgresql:postgresql")

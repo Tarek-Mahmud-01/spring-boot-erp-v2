@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { ApiError } from "@/shared/types/api";
 import { http } from "@/shared/services/http";
-import { clearTokens, getAccessToken, setTokens } from "@/shared/services/authTokens";
 
 /**
  * Auth slice (ARCHITECTURE.md §3 global slices). Holds the authenticated user
@@ -19,8 +18,8 @@ export interface CurrentUser {
 }
 
 interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
+  /** Access-token lifetime in seconds; tokens themselves are httpOnly cookies. */
+  expiresInSeconds: number;
   user: CurrentUser;
 }
 
@@ -47,30 +46,41 @@ export const login = createAsyncThunk<
   { rejectValue: ApiError }
 >("auth/login", async (credentials, { rejectWithValue }) => {
   try {
+    // The backend sets httpOnly auth cookies; the body carries only the user.
     const res = await http.post<LoginResponse>("/auth/login", credentials);
-    setTokens(res.data.accessToken, res.data.refreshToken);
     return res.data;
   } catch (err) {
     return rejectWithValue(err as ApiError);
   }
 });
 
-/** Load the current user + permissions from an existing token (page reload). */
+/**
+ * Load the current user + permissions on page reload. The httpOnly session
+ * cookie (if any) decides: a 401 simply means "not logged in". We can't read
+ * the token in JS anymore, so we always ask the server.
+ */
 export const fetchCurrentUser = createAsyncThunk<CurrentUser | null, void, { rejectValue: ApiError }>(
   "auth/fetchCurrentUser",
   async (_, { rejectWithValue }) => {
-    if (!getAccessToken()) return null;
     try {
       const res = await http.get<CurrentUser>("/auth/me");
       return res.data;
     } catch (err) {
-      return rejectWithValue(err as ApiError);
+      const apiError = err as ApiError;
+      // 401 = no valid session; treat as anonymous, not an error to surface.
+      if (apiError.status === 401) return null;
+      return rejectWithValue(apiError);
     }
   },
 );
 
 export const logout = createAsyncThunk("auth/logout", async () => {
-  clearTokens();
+  // Tell the server to revoke the refresh-token family and clear the cookies.
+  try {
+    await http.post("/auth/logout");
+  } catch {
+    // Even if the call fails, drop local auth state below.
+  }
 });
 
 const authSlice = createSlice({

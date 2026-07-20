@@ -4,23 +4,27 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 import type { ApiError } from "@/shared/types/api";
-import { clearTokens, getAccessToken, getRefreshToken, setTokens } from "./authTokens";
+import { getCsrfToken } from "./authTokens";
 
 /**
  * Shared axios instance (ARCHITECTURE.md §3.1). Every thunk calls through this.
  * Responsibilities:
- *   - `/api` base prefix.
- *   - Attach `Authorization: Bearer <accessToken>` on each request.
- *   - On 401 with an expired token, transparently refresh once and retry.
+ *   - `/api` base prefix, and `withCredentials` so the httpOnly auth cookies
+ *     ride along automatically (tokens are never in JS).
+ *   - Echo the CSRF cookie in the `X-CSRF-Token` header on mutating requests
+ *     (double-submit-cookie) so the server accepts them.
+ *   - On 401, transparently refresh once (cookie-based) and retry.
  *   - Normalize RFC-7807 problem+json into a typed ApiError and surface it via
  *     a toast callback (wired by the app, so this module has no UI dependency).
  */
 
 const BASE_URL = "/api";
+const MUTATING = new Set(["post", "put", "patch", "delete"]);
 
 export const http: AxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
 
 // --- UI hooks wired at app startup (no direct import of the toast system) ---
@@ -38,11 +42,14 @@ export function configureHttp(handlers: {
   if (handlers.onSessionExpired) onSessionExpired = handlers.onSessionExpired;
 }
 
-// --- Request: attach the bearer token ---
+// --- Request: attach the CSRF token on mutating requests ---
 http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = getAccessToken();
-  if (token) {
-    config.headers.set("Authorization", `Bearer ${token}`);
+  const method = (config.method ?? "get").toLowerCase();
+  if (MUTATING.has(method)) {
+    const csrf = getCsrfToken();
+    if (csrf) {
+      config.headers.set("X-CSRF-Token", csrf);
+    }
   }
   return config;
 });
@@ -53,19 +60,17 @@ interface RetriableConfig extends InternalAxiosRequestConfig {
 }
 
 // Single in-flight refresh shared by all concurrent 401s.
-let refreshInFlight: Promise<string | null> | null = null;
+let refreshInFlight: Promise<boolean> | null = null;
 
-async function refreshAccessToken(): Promise<string | null> {
-  const refresh = getRefreshToken();
-  if (!refresh) return null;
+async function refreshSession(): Promise<boolean> {
   try {
-    // Bare axios call (not `http`) to avoid the interceptor recursion.
-    const res = await axios.post(`${BASE_URL}/auth/refresh`, { refreshToken: refresh });
-    const { accessToken, refreshToken } = res.data as { accessToken: string; refreshToken: string };
-    setTokens(accessToken, refreshToken);
-    return accessToken;
+    // The refresh token rides in its httpOnly cookie; the server rotates it and
+    // sets fresh auth cookies. Bare axios (not `http`) to avoid interceptor
+    // recursion; withCredentials so the cookie is sent.
+    await axios.post(`${BASE_URL}/auth/refresh`, {}, { withCredentials: true });
+    return true;
   } catch {
-    return null;
+    return false;
   }
 }
 
@@ -76,18 +81,16 @@ http.interceptors.response.use(
     const status = error.response?.status;
     const problem = error.response?.data;
 
-    // Attempt a single transparent refresh on 401 (expired access token).
-    if (status === 401 && config && !config._retry && getRefreshToken()) {
+    // Attempt a single transparent refresh on 401 (expired access cookie).
+    if (status === 401 && config && !config._retry) {
       config._retry = true;
-      refreshInFlight ??= refreshAccessToken().finally(() => {
+      refreshInFlight ??= refreshSession().finally(() => {
         refreshInFlight = null;
       });
-      const newToken = await refreshInFlight;
-      if (newToken) {
-        config.headers.set("Authorization", `Bearer ${newToken}`);
+      const refreshed = await refreshInFlight;
+      if (refreshed) {
         return http(config);
       }
-      clearTokens();
       onSessionExpired();
     }
 

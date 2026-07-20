@@ -26,18 +26,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String BEARER = "Bearer ";
     private final JwtService jwtService;
+    private final AuthCookieService cookieService;
 
-    public JwtAuthenticationFilter(JwtService jwtService) {
+    public JwtAuthenticationFilter(JwtService jwtService, AuthCookieService cookieService) {
         this.jwtService = jwtService;
+        this.cookieService = cookieService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
         throws ServletException, IOException {
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (StringUtils.hasText(header) && header.startsWith(BEARER)
+        String token = resolveToken(request);
+        if (StringUtils.hasText(token)
             && SecurityContextHolder.getContext().getAuthentication() == null) {
-            String token = header.substring(BEARER.length());
             try {
                 AuthPrincipal principal = jwtService.parseAccessToken(token);
                 var auth = new UsernamePasswordAuthenticationToken(
@@ -50,5 +51,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         chain.doFilter(request, response);
+    }
+
+    /**
+     * Access token comes from the httpOnly cookie (browser). A {@code Bearer}
+     * header is still honoured as a fallback for API clients and tests.
+     */
+    private String resolveToken(HttpServletRequest request) {
+        String cookieToken = cookieService.readAccessToken(request);
+        if (StringUtils.hasText(cookieToken)) {
+            return cookieToken;
+        }
+        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(header) && header.startsWith(BEARER)) {
+            return header.substring(BEARER.length());
+        }
+        return null;
     }
 }

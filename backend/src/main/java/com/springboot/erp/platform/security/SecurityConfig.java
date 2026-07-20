@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableMethodSecurity
-@EnableConfigurationProperties(JwtProperties.class)
+@EnableConfigurationProperties({JwtProperties.class, AuthCookieProperties.class})
 public class SecurityConfig {
 
     /** Endpoints reachable without authentication. */
@@ -35,8 +35,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http,
                                     JwtAuthenticationFilter jwtFilter,
+                                    CsrfCookieFilter csrfCookieFilter,
                                     ProblemAuthEntryPoint problemHandler) throws Exception {
         http
+            // Spring's built-in CSRF is disabled; we run our own double-submit
+            // cookie check (CsrfCookieFilter) tailored to the cookie-token flow.
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> {})
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -47,7 +50,17 @@ public class SecurityConfig {
             .exceptionHandling(eh -> eh
                 .authenticationEntryPoint(problemHandler)
                 .accessDeniedHandler(problemHandler))
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            // Hardening response headers: block sniffing/clickjacking; HSTS for TLS.
+            .headers(headers -> headers
+                .contentTypeOptions(cto -> {})
+                .frameOptions(fo -> fo.deny())
+                .httpStrictTransportSecurity(hsts -> hsts
+                    .includeSubDomains(true)
+                    .maxAgeInSeconds(31536000)))
+            // CSRF check must run after the JWT filter (it needs to know whether
+            // the request is cookie-authenticated) but before the controller.
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(csrfCookieFilter, JwtAuthenticationFilter.class);
         return http.build();
     }
 

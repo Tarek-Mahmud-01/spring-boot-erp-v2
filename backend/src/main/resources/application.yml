@@ -27,6 +27,13 @@ spring:
     baseline-on-migrate: false
     locations: classpath:db/migration
 
+  # Redis — refresh-token store (rotation/revocation) + login throttle counters.
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:56379}
+      timeout: 2s
+
 # Custom non-default backend port (ARCHITECTURE.md §0.2).
 server:
   port: ${SERVER_PORT:58080}
@@ -65,6 +72,28 @@ app:
     access-ttl-minutes: ${JWT_ACCESS_TTL_MINUTES:30}
     refresh-ttl-days: ${JWT_REFRESH_TTL_DAYS:14}
     issuer: guru-erp
+
+  # Authentication cookie + throttle settings (see AuthCookieProperties / LoginThrottle).
+  auth:
+    # Tokens are delivered as httpOnly cookies so page JS (and thus XSS) can never
+    # read them. Secure=false in dev (http://localhost); set AUTH_COOKIE_SECURE=true
+    # behind TLS in prod. SameSite=Strict blocks cross-site sending (CSRF defense).
+    cookie:
+      secure: ${AUTH_COOKIE_SECURE:false}
+      same-site: ${AUTH_COOKIE_SAMESITE:Strict}
+      # Restrict cookies to the API path; refresh cookie is scoped tighter.
+      access-name: ERP_AT
+      refresh-name: ERP_RT
+      csrf-name: ERP_CSRF
+    # Login brute-force throttle: after `max-attempts` failures for an
+    # ip+username within the window, lock further attempts for `lock-minutes`.
+    login-throttle:
+      max-attempts: ${LOGIN_MAX_ATTEMPTS:5}
+      window-minutes: ${LOGIN_WINDOW_MINUTES:15}
+      lock-minutes: ${LOGIN_LOCK_MINUTES:15}
+    # Refuse to start with the built-in dev secret unless explicitly allowed.
+    # In real deploys leave this false so a missing JWT_SECRET fails fast.
+    allow-insecure-secret: ${AUTH_ALLOW_INSECURE_SECRET:true}
 
 logging:
   pattern:

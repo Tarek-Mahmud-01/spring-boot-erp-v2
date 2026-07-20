@@ -15,11 +15,6 @@ public final class AuthDtos {
     ) {
     }
 
-    public record RefreshRequest(
-        @NotBlank String refreshToken
-    ) {
-    }
-
     /** The authenticated user as surfaced to the client (never the password hash). */
     public record CurrentUserResponse(
         String publicId,
@@ -30,9 +25,11 @@ public final class AuthDtos {
     ) {
     }
 
+    /**
+     * Login/refresh JSON body. Tokens are NOT returned here — they are set as
+     * httpOnly cookies. The client receives only the user + access lifetime.
+     */
     public record LoginResponse(
-        String accessToken,
-        String refreshToken,
         long expiresInSeconds,
         CurrentUserResponse user
     ) {
