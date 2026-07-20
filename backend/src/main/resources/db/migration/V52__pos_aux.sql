@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V52 — POS module, "aux" sub-slice (auxiliary checkout flows).
 --
--- Matches the JPA entities under com.guru.erp.modules.pos.aux.domain
+-- Matches the JPA entities under com.springboot.erp.modules.pos.aux.domain
 -- extending BaseEntity:
 --   PosParkedSale  (US-035 FR-182..186 — a parked cart keyed by a short,
 --                   human-typeable code so a lane can be freed for the next

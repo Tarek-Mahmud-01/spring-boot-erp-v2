@@ -2,7 +2,7 @@
 -- V40 — PROCUREMENT module, "suppliers" sub-slice (the AP master).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.suppliers.domain extending BaseEntity:
+-- com.springboot.erp.modules.procurement.suppliers.domain extending BaseEntity:
 --   ENT-026  Supplier            (AP master: contact/address/bank jsonb,
 --                                 trade type, status lifecycle, credit
 --                                 limit + opening balance as Money)

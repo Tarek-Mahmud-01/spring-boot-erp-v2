@@ -2,7 +2,7 @@
 -- V51 — POS module, "transactions" sub-slice (the core sale).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.pos.transactions.domain extending BaseEntity:
+-- com.springboot.erp.modules.pos.transactions.domain extending BaseEntity:
 --   ENT-PosTransaction      (header — the sale/receipt; OPEN -> PARKED/
 --                            COMPLETED/VOIDED status workflow)
 --   ENT-PosTransactionLine  (cart/receipt lines; price/tax/restriction

@@ -37,6 +37,12 @@ export const PERMISSIONS = {
   ADJUSTMENT_WRITE: "inventory.adjustment.write",
   TRANSFER_READ: "inventory.transfer.read",
   TRANSFER_WRITE: "inventory.transfer.write",
+
+  COA_READ: "finance.coa.read",
+  COA_WRITE: "finance.coa.write",
+  JOURNAL_READ: "finance.journal.read",
+  JOURNAL_WRITE: "finance.journal.write",
+  JOURNAL_POST: "finance.journal.post",
 } as const;
 
 export type PermissionCode = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

@@ -6,7 +6,10 @@ import type { Config } from "tailwindcss";
  * [data-theme="dark"] on <html>. Brand scales (primary/accent/etc.) are
  * fixed hues. NEVER hardcode hex in components — use these token classes.
  *
- * Brand: primary #714B67 (mauve), accent #00A09D (teal), Inter, 14px body.
+ * Brand: primary near-black slate #111827 (black/white system), accent
+ * #00A09D (teal), Inter, 14px body. Dark mode is a first-class theme, not
+ * an afterthought — surfaces use a true dark slate scale, not just inverted
+ * neutrals.
  */
 const config: Config = {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
@@ -24,17 +27,17 @@ const config: Config = {
 
         // Brand scales (fixed hues)
         primary: {
-          50: "#F5F0F4",
-          100: "#E8DCE4",
-          200: "#D1B8C9",
-          300: "#B395A8",
-          400: "#956F86",
-          500: "#825A73",
-          600: "#714B67",
-          700: "#5C3D54",
-          800: "#472F40",
-          900: "#2E1F2A",
-          DEFAULT: "#714B67",
+          50: "#F9FAFB",
+          100: "#F3F4F6",
+          200: "#E5E7EB",
+          300: "#D1D5DB",
+          400: "#9CA3AF",
+          500: "#4B5563",
+          600: "#1F2937",
+          700: "#111827",
+          800: "#0B0F17",
+          900: "#05070B",
+          DEFAULT: "#111827",
         },
         accent: {
           50: "#E0F5F4",

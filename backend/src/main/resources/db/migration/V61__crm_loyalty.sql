@@ -2,7 +2,7 @@
 -- V61 — CRM module, "loyalty" sub-slice (US-039 loyalty program mechanics
 -- + US-041 purchase-history projection feeding loyalty/segment logic).
 --
--- Matches the JPA entities under com.guru.erp.modules.crm.loyalty.domain
+-- Matches the JPA entities under com.springboot.erp.modules.crm.loyalty.domain
 -- extending BaseEntity:
 --   ENT-072  LoyaltyConfig        (one loyalty program per company)
 --   ENT-070  LoyaltyAccount       (1:1 per-customer points balance)

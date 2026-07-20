@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V71 — FINANCE module, "gl" sub-slice (General Ledger core).
 --
--- Matches the JPA entities under com.guru.erp.modules.finance.gl.domain
+-- Matches the JPA entities under com.springboot.erp.modules.finance.gl.domain
 -- extending BaseEntity:
 --   ENT-046  JournalEntry    (header: company/location, voucher_type/number,
 --                             entry_date, period_code, status, total_debit/credit,

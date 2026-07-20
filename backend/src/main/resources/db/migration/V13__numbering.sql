@@ -2,7 +2,7 @@
 -- V13 — ENT-006 Numbering Rule (US-005 / FR-022-025).
 --
 -- One rule per (company, document type) issues running sequence numbers.
--- Columns match com.guru.erp.modules.settings.numbering.domain.NumberingRule
+-- Columns match com.springboot.erp.modules.settings.numbering.domain.NumberingRule
 -- plus the BaseEntity columns (public_id, audit, soft delete, optimistic lock).
 --
 -- company_id holds the owning company's public id (ULID) — v2 has no companies

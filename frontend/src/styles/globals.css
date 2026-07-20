@@ -7,44 +7,48 @@
  *
  * Semantic surface/content tokens are space-separated RGB channels so
  * Tailwind's `rgb(var(--token) / <alpha-value>)` supports opacity. They flip
- * for dark mode. Brand hues (primary mauve, accent teal) are fixed in
- * tailwind.config.ts. NEVER hardcode hex in components — use the token classes.
+ * for dark mode. Brand hues (primary near-black slate, accent teal) are
+ * fixed in tailwind.config.ts. NEVER hardcode hex in components — use the
+ * token classes.
  *
- * Dark mode is driven by [data-theme="dark"] on <html> (set by the theme
- * slice), which overrides the OS `prefers-color-scheme` in both directions.
+ * Black/white by default: light mode is calm white + light gray (mirrors
+ * the reference ZATCA app's palette). Dark mode is a first-class deep-slate
+ * theme, not an inverted afterthought. Driven by [data-theme] on <html>
+ * (set by the theme slice), which overrides OS `prefers-color-scheme` in
+ * both directions.
  */
 
 @layer base {
   :root,
   :root[data-theme="light"] {
-    --bg: 249 250 251;          /* neutral-50 */
-    --surface: 255 255 255;     /* white */
-    --surface-muted: 243 244 246; /* neutral-100 */
-    --fg: 17 24 39;             /* neutral-900 */
-    --fg-muted: 107 114 128;    /* neutral-500 */
-    --border: 229 231 235;      /* neutral-200 */
+    --bg: 249 250 251;          /* #f9fafb */
+    --surface: 255 255 255;     /* #ffffff */
+    --surface-muted: 243 244 246; /* #f3f4f6 */
+    --fg: 17 24 39;             /* #111827 */
+    --fg-muted: 107 114 128;    /* #6b7280 */
+    --border: 229 231 235;      /* #e5e7eb */
     color-scheme: light;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: 17 24 39;           /* neutral-900 */
-      --surface: 31 41 55;      /* neutral-800 */
-      --surface-muted: 55 65 81; /* neutral-700 */
-      --fg: 249 250 251;        /* neutral-50 */
-      --fg-muted: 156 163 175;  /* neutral-400 */
-      --border: 55 65 81;       /* neutral-700 */
+      --bg: 9 12 17;             /* near-black slate */
+      --surface: 17 22 30;       /* deep slate card */
+      --surface-muted: 26 32 43; /* raised slate */
+      --fg: 243 244 246;
+      --fg-muted: 148 157 173;
+      --border: 39 46 59;
       color-scheme: dark;
     }
   }
 
   :root[data-theme="dark"] {
-    --bg: 17 24 39;
-    --surface: 31 41 55;
-    --surface-muted: 55 65 81;
-    --fg: 249 250 251;
-    --fg-muted: 156 163 175;
-    --border: 55 65 81;
+    --bg: 9 12 17;
+    --surface: 17 22 30;
+    --surface-muted: 26 32 43;
+    --fg: 243 244 246;
+    --fg-muted: 148 157 173;
+    --border: 39 46 59;
     color-scheme: dark;
   }
 
@@ -63,7 +67,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--primary-ring, 113 75 103));
+    outline: 2px solid rgb(var(--primary-ring, 17 24 39));
     outline-offset: 2px;
   }
 }

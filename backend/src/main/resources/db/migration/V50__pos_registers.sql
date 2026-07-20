@@ -2,7 +2,7 @@
 -- V50 — POS module, "registers" sub-slice (US-005.1 register/terminal setup
 -- + US-037 till sessions).
 --
--- Matches the JPA entities under com.guru.erp.modules.pos.registers.domain
+-- Matches the JPA entities under com.springboot.erp.modules.pos.registers.domain
 -- extending BaseEntity:
 --   ENT-060  Register            (a POS lane/terminal at a STORE location)
 --   ENT-060a RegisterPeripheral  (bound printer/scanner/drawer config)

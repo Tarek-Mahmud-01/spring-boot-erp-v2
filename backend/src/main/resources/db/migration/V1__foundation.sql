@@ -5,7 +5,7 @@
 -- from `pg_dump --schema-only` of the reference guru_erp DB. That requires the
 -- reference database to be running and is tracked separately. This migration
 -- establishes the cross-cutting platform tables + the access (RBAC) tables the
--- pilot module needs, all matching the JPA entities in com.guru.erp.platform.
+-- pilot module needs, all matching the JPA entities in com.springboot.erp.platform.
 -- Forward changes go in V2+.
 -- =====================================================================
 
@@ -74,7 +74,7 @@ create index idx_status_history_entity on status_history (entity_type, entity_pu
 
 -- ---------------------------------------------------------------------
 -- Access (RBAC): users, roles, permissions + join tables.
--- Columns mirror com.guru.erp.platform.entity.BaseEntity (public_id, audit,
+-- Columns mirror com.springboot.erp.platform.entity.BaseEntity (public_id, audit,
 -- soft delete, optimistic lock).
 -- ---------------------------------------------------------------------
 create table permissions (

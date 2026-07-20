@@ -10,7 +10,7 @@
 -- ('Draft', 'Approved', …) via the entity AttributeConverter.
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.receipts.domain extending BaseEntity.
+-- com.springboot.erp.modules.procurement.receipts.domain extending BaseEntity.
 --
 -- Cross-slice references (purchase order, purchase order line, location,
 -- variant, receiver user) are held as loose ULID char(26) columns — no hard

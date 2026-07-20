@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V12 — ENT-002 Location (settings.location vertical slice).
 --
--- Mirrors com.guru.erp.modules.settings.location.domain.Location. Domain
+-- Mirrors com.springboot.erp.modules.settings.location.domain.Location. Domain
 -- columns + the BaseEntity columns (public_id, audit, soft delete,
 -- optimistic lock). Belongs to one company via a bigint `company_id`
 -- (reference: locations.company_id → companies.id on delete restrict).

@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V72 — FINANCE module, "periods" sub-slice (fiscal period close + BAS).
 --
--- Matches the JPA entities under com.guru.erp.modules.finance.periods.domain
+-- Matches the JPA entities under com.springboot.erp.modules.finance.periods.domain
 -- extending BaseEntity:
 --   ENT-015      FiscalPeriod          (the fiscal period being closed —
 --                                        DRAFT->OPEN->...->CLOSED->ARCHIVED)

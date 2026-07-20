@@ -29,6 +29,8 @@ const BillsPage = lazy(() => import("@/modules/procurement/bills/pages/BillsPage
 const StockPage = lazy(() => import("@/modules/inventory/stock/pages/StockPage"));
 const AdjustmentsPage = lazy(() => import("@/modules/inventory/adjustments/pages/AdjustmentsPage"));
 const TransfersPage = lazy(() => import("@/modules/inventory/transfers/pages/TransfersPage"));
+const ChartOfAccountsPage = lazy(() => import("@/modules/finance/coa/pages/ChartOfAccountsPage"));
+const JournalEntriesPage = lazy(() => import("@/modules/finance/gl/pages/JournalEntriesPage"));
 
 const router = createBrowserRouter([
   {
@@ -57,6 +59,11 @@ const router = createBrowserRouter([
       { path: ROUTES.REQUISITIONS, element: <RequisitionsPage /> },
       { path: ROUTES.RECEIPTS, element: <ReceiptsPage /> },
       { path: ROUTES.BILLS, element: <BillsPage /> },
+      { path: ROUTES.STOCK, element: <StockPage /> },
+      { path: ROUTES.ADJUSTMENTS, element: <AdjustmentsPage /> },
+      { path: ROUTES.TRANSFERS, element: <TransfersPage /> },
+      { path: ROUTES.CHART_OF_ACCOUNTS, element: <ChartOfAccountsPage /> },
+      { path: ROUTES.JOURNAL_ENTRIES, element: <JournalEntriesPage /> },
     ],
   },
   { path: "*", element: <Navigate to={ROUTES.ROOT} replace /> },

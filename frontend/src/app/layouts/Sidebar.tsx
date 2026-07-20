@@ -14,6 +14,11 @@ import {
   FileText,
   PackageCheck,
   Receipt,
+  Boxes,
+  SlidersHorizontal,
+  ArrowLeftRight,
+  BookOpen,
+  ScrollText,
 } from "lucide-react";
 import { cn } from "@/shared/utils/cn";
 import { usePermission } from "@/shared/hooks/usePermission";
@@ -66,6 +71,35 @@ const ITEMS: NavItem[] = [
     permission: PERMISSIONS.RECEIPT_READ,
   },
   { to: ROUTES.BILLS, label: "Supplier bills", icon: Receipt, group: "Procurement", permission: PERMISSIONS.BILL_READ },
+  { to: ROUTES.STOCK, label: "Stock on hand", icon: Boxes, group: "Inventory", permission: PERMISSIONS.STOCK_READ },
+  {
+    to: ROUTES.ADJUSTMENTS,
+    label: "Adjustments",
+    icon: SlidersHorizontal,
+    group: "Inventory",
+    permission: PERMISSIONS.ADJUSTMENT_READ,
+  },
+  {
+    to: ROUTES.TRANSFERS,
+    label: "Transfers",
+    icon: ArrowLeftRight,
+    group: "Inventory",
+    permission: PERMISSIONS.TRANSFER_READ,
+  },
+  {
+    to: ROUTES.CHART_OF_ACCOUNTS,
+    label: "Chart of accounts",
+    icon: BookOpen,
+    group: "Finance",
+    permission: PERMISSIONS.COA_READ,
+  },
+  {
+    to: ROUTES.JOURNAL_ENTRIES,
+    label: "Journal entries",
+    icon: ScrollText,
+    group: "Finance",
+    permission: PERMISSIONS.JOURNAL_READ,
+  },
 ];
 
 export function Sidebar() {

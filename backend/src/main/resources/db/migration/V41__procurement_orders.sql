@@ -2,7 +2,7 @@
 -- V41 — PROCUREMENT module, "orders" sub-slice.
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.orders.domain extending BaseEntity:
+-- com.springboot.erp.modules.procurement.orders.domain extending BaseEntity:
 --   ENT-027  PurchaseRequisition       (header + approval workflow)
 --   ENT-027a PurchaseRequisitionLine   (requisition lines)
 --   ENT-028  PurchaseOrder             (header + status workflow)

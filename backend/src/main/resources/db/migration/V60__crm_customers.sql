@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V60 — CRM module, "customers" sub-slice (customer master).
 --
--- Matches the JPA entities under com.guru.erp.modules.crm.customers.domain
+-- Matches the JPA entities under com.springboot.erp.modules.crm.customers.domain
 -- extending BaseEntity:
 --   ENT-050  Customer               (core record)
 --   ENT-051  CustomerProfile        (1:1 CRM contact + per-channel consent)

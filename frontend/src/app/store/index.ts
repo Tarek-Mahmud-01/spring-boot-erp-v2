@@ -15,6 +15,8 @@ import billReducer from "@/modules/procurement/bills/slice/billSlice";
 import stockReducer from "@/modules/inventory/stock/slice/stockSlice";
 import adjustmentReducer from "@/modules/inventory/adjustments/slice/adjustmentSlice";
 import transferReducer from "@/modules/inventory/transfers/slice/transferSlice";
+import accountReducer from "@/modules/finance/coa/slice/accountSlice";
+import journalEntryReducer from "@/modules/finance/gl/slice/journalEntrySlice";
 import authReducer from "./authSlice";
 import themeReducer from "./themeSlice";
 import toastReducer from "./toastSlice";
@@ -44,6 +46,8 @@ export const store = configureStore({
     stock: stockReducer,
     adjustment: adjustmentReducer,
     transfer: transferReducer,
+    account: accountReducer,
+    journalEntry: journalEntryReducer,
     [masterDataApi.reducerPath]: masterDataApi.reducer,
   },
   middleware: (getDefault) => getDefault().concat(masterDataApi.middleware),

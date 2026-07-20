@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V14 — ENT-001 Company (settings.company vertical slice).
 --
--- Matches com.guru.erp.modules.settings.company.domain.Company + BaseEntity.
+-- Matches com.springboot.erp.modules.settings.company.domain.Company + BaseEntity.
 -- Constraints reproduced from the reference SQLAlchemy model:
 --   * unique(code)                       — FR-001
 --   * partial unique on is_primary=true  — FR-004 (exactly one primary)

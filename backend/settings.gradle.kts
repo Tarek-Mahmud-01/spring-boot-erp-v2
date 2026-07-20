@@ -4,4 +4,4 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
 }
 
-rootProject.name = "guru-erp-backend"
+rootProject.name = "spring-boot-erp-backend"

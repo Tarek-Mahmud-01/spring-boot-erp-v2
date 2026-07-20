@@ -11,7 +11,7 @@
 -- assignment at GRN time) and LabelSize (seeded print-label stock sizes).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.landed.domain extending BaseEntity.
+-- com.springboot.erp.modules.procurement.landed.domain extending BaseEntity.
 --
 -- Cross-slice references (GRN, GRN line, PO, PO line, supplier, product,
 -- variant, location) are held as loose ULID char(26) columns — no hard

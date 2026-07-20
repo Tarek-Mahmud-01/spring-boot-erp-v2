@@ -2,7 +2,7 @@
 -- V43 — PROCUREMENT module, "bills" sub-slice.
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.bills.domain extending BaseEntity:
+-- com.springboot.erp.modules.procurement.bills.domain extending BaseEntity:
 --   ENT-030  SupplierBill              (AP invoice header)
 --   ENT-030a SupplierBillLine          (bill lines; 3-way match anchor)
 --   ENT-030b SupplierBillGrnLink       (bill ↔ GRN link)

@@ -7,7 +7,7 @@
 -- Draft → Pending Approval/Approved → Posted → Reversed).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.inventory.movements.domain extending BaseEntity.
+-- com.springboot.erp.modules.inventory.movements.domain extending BaseEntity.
 --
 -- Cross-slice references (locations, products, uoms, variants, GL accounts,
 -- journal entries, approver users) are held as loose ULID char(26) columns

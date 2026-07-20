@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V70 — FINANCE module, "coa" sub-slice (Chart of Accounts).
 --
--- Matches the JPA entities under com.guru.erp.modules.finance.coa.domain
+-- Matches the JPA entities under com.springboot.erp.modules.finance.coa.domain
 -- extending BaseEntity:
 --   ENT-016  Account         (nested-set chart-of-accounts tree)
 --   ENT-018  AccountMapping  (module + purpose -> GL account)

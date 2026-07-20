@@ -29,6 +29,10 @@ export const ROUTES = {
   STOCK: "/inventory/stock",
   ADJUSTMENTS: "/inventory/adjustments",
   TRANSFERS: "/inventory/transfers",
+
+  // finance
+  CHART_OF_ACCOUNTS: "/finance/accounts",
+  JOURNAL_ENTRIES: "/finance/journal-entries",
 } as const;
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];

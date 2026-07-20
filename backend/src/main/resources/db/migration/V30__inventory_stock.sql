@@ -2,7 +2,7 @@
 -- V30 — INVENTORY module, "stock" sub-slice (the core stock engine).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.inventory.stock.domain extending BaseEntity:
+-- com.springboot.erp.modules.inventory.stock.domain extending BaseEntity:
 --   ENT-040 StockLedger              (append-only movement ledger)
 --   ENT-041 InventoryValuationConfig (per-company FIFO/AVG/STANDARD)
 --   ENT-045 ProductBatch             (batch/lot tracking with expiry)

@@ -3,7 +3,7 @@
 --
 -- Core product master aggregate + variants, barcodes, images, and custom
 -- attribute values. Matches the JPA entities under
--- com.guru.erp.modules.product.catalog.domain extending BaseEntity.
+-- com.springboot.erp.modules.product.catalog.domain extending BaseEntity.
 --
 -- Cross-slice references (category, uom, supplier, tax code) are held as loose
 -- ULID char(26) columns — no hard cross-slice FK (app-layer resolution per the

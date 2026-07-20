@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "com.guru.erp"
+group = "com.springboot.erp"
 version = "0.0.1-SNAPSHOT"
 description = "guru-erp-backend"
 

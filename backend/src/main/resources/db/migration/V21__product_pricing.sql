@@ -2,7 +2,7 @@
 -- V21 — PRODUCT module, pricing sub-slice (US-013 / FR-061..064).
 --
 -- Mirrors the JPA entities under
--- com.guru.erp.modules.product.pricing.domain, each extending BaseEntity
+-- com.springboot.erp.modules.product.pricing.domain, each extending BaseEntity
 -- (public_id, created_at/by, updated_at/by, deleted_at, version). Money is
 -- long minor units (price_amount) + ISO-4217 char(3) (price_currency).
 --

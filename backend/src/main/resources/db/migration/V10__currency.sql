@@ -2,7 +2,7 @@
 -- V10 — ENT-018 Currency (settings module).
 --
 -- Global reference data shared across all companies (intentionally not
--- tenant-scoped). Matches com.guru.erp.modules.settings.currency.domain.Currency
+-- tenant-scoped). Matches com.springboot.erp.modules.settings.currency.domain.Currency
 -- extending BaseEntity. Exactly one row may be default, enforced by a partial
 -- unique index (Postgres has no declarative partial-unique constraint).
 -- =====================================================================

@@ -3,7 +3,7 @@
 -- notes raised against a goods receipt).
 --
 -- Matches the JPA entities under
--- com.guru.erp.modules.procurement.returns.domain extending BaseEntity:
+-- com.springboot.erp.modules.procurement.returns.domain extending BaseEntity:
 --   ENT-031  SupplierReturn      (header — supplier + GRN, debit note, FX)
 --   ENT-031a SupplierReturnLine  (returned lines against GRN lines)
 --

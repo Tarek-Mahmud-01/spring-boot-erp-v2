@@ -1,7 +1,7 @@
 -- =====================================================================
 -- V32 — INVENTORY module, "counts" sub-slice (governance + setup).
 --
--- Entities (matching com.guru.erp.modules.inventory.counts.domain,
+-- Entities (matching com.springboot.erp.modules.inventory.counts.domain,
 -- each extending BaseEntity):
 --   ENT-044  CycleCountPlan          — physical count plan header
 --   ENT-044a CycleCountLine          — counted lines (variance vs system qty)
