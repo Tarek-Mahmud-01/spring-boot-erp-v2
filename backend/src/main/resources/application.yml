@@ -30,6 +30,10 @@ spring:
 # Custom non-default backend port (ARCHITECTURE.md §0.2).
 server:
   port: ${SERVER_PORT:58080}
+  # The admin JWT carries the full permission set (150+ codes) and is sent as a
+  # Bearer header, which can exceed Tomcat's 8KB default and trigger a 400
+  # "Request header is too large". Raise the header cap to 64KB.
+  max-http-request-header-size: 64KB
   error:
     include-message: never
     include-stacktrace: never
